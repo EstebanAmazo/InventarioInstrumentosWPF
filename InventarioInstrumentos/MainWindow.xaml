@@ -6,45 +6,57 @@
         xmlns:local="clr-namespace:InventarioInstrumentos" 
         xmlns:local1="clr-namespace:InventarioInstrumentos.Helpers"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1200">
+        Title="MainWindow" Height="500" Width="900">
 
     <Window.Resources>
         <ResourceDictionary>
             <local1:CategoriaConverter x:Key="CategoriaConverter"/>
             <local1:TipoInstrumentoConverter x:Key="TipoInstrumentoConverter"/>
             <local1:MarcaConverter x:Key="MarcaConverter"/>
+
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="Button.Width" Value="120"/>
+                <Setter Property="Button.Height" Value="30"/>
+                <!--<Setter Property="Button.FontFamily" Value="Roboto"/>-->
+                <Setter Property="Button.FontSize" Value="12"/>
+                <Setter Property="Button.FontWeight" Value="Normal"/>
+                <Setter Property="Button.Foreground" Value="#FFCECECE"/>
+                <Setter Property="Button.Background" Value="#FF151515"/>
+                <Setter Property="Button.BorderBrush" Value="#FF151515"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#FFECECEC"/>
+                        <Setter Property="Button.Foreground" Value="#FF151515"/>
+                    </Trigger>
+                </Style.Triggers>
+
+            </Style>
         </ResourceDictionary>
+
+       
+
+
     </Window.Resources>
-    
-    <Grid>
-        <!--<DataGrid Name="miTabla" >
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Acciones">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="Editar" Click="Button_Click_1" />
-                                <Button Content="Eliminar" Click="Button_Click_1" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
 
-            </DataGrid.Columns>
-        </DataGrid>-->
-        <DataGrid Name="instrumentosDataGrid" AutoGenerateColumns="False" CanUserAddRows="False">
-            <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding TipoInstrumento, Converter={StaticResource TipoInstrumentoConverter}}"/>
-                <DataGridTextColumn Header="Marca" Binding="{Binding Marca, Converter={StaticResource MarcaConverter}}"/>
-                <DataGridTextColumn Header="Modelo" Binding="{Binding Modelo}"/>
-                <DataGridTextColumn Header="Serial" Binding="{Binding Serial}"/>
-                <DataGridTextColumn Header="Gama" Binding="{Binding Gama}"/>
-                <DataGridTextColumn Header="Categoria" Binding="{Binding Categoria, Converter={StaticResource CategoriaConverter}}"/>
-                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}"/>
-                <DataGridTextColumn Header="Precio" Binding="{Binding Precio}"/>
-                <DataGridTextColumn Header="Stock" Binding="{Binding Stock}"/>
+    <Grid >
+
+        <Grid.RowDefinitions >
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="60*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="1" Name="instrumentosDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Center" Width="880" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Width="*" Header="Nombre" Binding="{Binding TipoInstrumento, Converter={StaticResource TipoInstrumentoConverter}}"/>
+                <DataGridTextColumn Width="*" Header="Marca" Binding="{Binding Marca, Converter={StaticResource MarcaConverter}}"/>
+                <DataGridTextColumn Width="*" Header="Modelo" Binding="{Binding Modelo}"/>
+                <DataGridTextColumn Width="*" Header="Serial" Binding="{Binding Serial}"/>
+                <DataGridTextColumn Width="*" Header="Categoria" Binding="{Binding Categoria, Converter={StaticResource CategoriaConverter}}"/>
+                <DataGridTextColumn Width="*" Header="Estado" Binding="{Binding Estado}"/>
+                <DataGridTextColumn Width="*" Header="Precio" Binding="{Binding Precio}"/>
+                <DataGridTextColumn Width="*" Header="Stock" Binding="{Binding Stock}"/>
 
                 <DataGridTemplateColumn Header="Acciones">
                     <DataGridTemplateColumn.CellTemplate>
@@ -59,6 +71,12 @@
 
             </DataGrid.Columns>
         </DataGrid>
+        <TextBlock Background="#FF151515" HorizontalAlignment="Center" Height="34" TextWrapping="Wrap" Text="Stock Instrumentos Musicales" VerticalAlignment="Top" Width="880" FontSize="16px" Foreground="#FFD2D2D2"/>
+        <Button Style="{StaticResource ButtonStyle}" Content="Instrumentos" HorizontalAlignment="Left" Margin="325,39,0,0" VerticalAlignment="Top" />
+        <Button Style="{StaticResource ButtonStyle}" Content="Marcas" HorizontalAlignment="Left" Margin="469,39,0,0" VerticalAlignment="Top" />
+        <Button Style="{StaticResource ButtonStyle}" Content="Tipos" HorizontalAlignment="Left" Margin="615,39,0,0" VerticalAlignment="Top" />
+        <Button Style="{StaticResource ButtonStyle}" Content="Categorias" HorizontalAlignment="Left" Margin="760,39,0,0" VerticalAlignment="Top" />
+        <TextBlock  HorizontalAlignment="Center" Height="24" TextWrapping="Wrap" Text="Instrumentos" VerticalAlignment="Top" Margin="0,160,0,0" Width="880" Background="#FF151515" Foreground="#FFEAEAEA"/>
 
     </Grid>
 </Window>

@@ -102,11 +102,10 @@ namespace InventarioInstrumentos
             return null;
         }
 
+        private void instrumentosDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
-
-
-
-
+        }
     }
 
 }
