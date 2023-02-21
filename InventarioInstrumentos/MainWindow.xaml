@@ -6,11 +6,13 @@
         xmlns:local="clr-namespace:InventarioInstrumentos" 
         xmlns:local1="clr-namespace:InventarioInstrumentos.Helpers"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="1200">
 
     <Window.Resources>
         <ResourceDictionary>
             <local1:CategoriaConverter x:Key="CategoriaConverter"/>
+            <local1:TipoInstrumentoConverter x:Key="TipoInstrumentoConverter"/>
+            <local1:MarcaConverter x:Key="MarcaConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     
@@ -30,11 +32,30 @@
 
             </DataGrid.Columns>
         </DataGrid>-->
-        <DataGrid Name="instrumentosDataGrid" AutoGenerateColumns="False">
+        <DataGrid Name="instrumentosDataGrid" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
-          
-                <DataGridTextColumn Header="Nombre" Binding="{Binding Modelo}"/>
+
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding TipoInstrumento, Converter={StaticResource TipoInstrumentoConverter}}"/>
+                <DataGridTextColumn Header="Marca" Binding="{Binding Marca, Converter={StaticResource MarcaConverter}}"/>
+                <DataGridTextColumn Header="Modelo" Binding="{Binding Modelo}"/>
+                <DataGridTextColumn Header="Serial" Binding="{Binding Serial}"/>
+                <DataGridTextColumn Header="Gama" Binding="{Binding Gama}"/>
                 <DataGridTextColumn Header="Categoria" Binding="{Binding Categoria, Converter={StaticResource CategoriaConverter}}"/>
+                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}"/>
+                <DataGridTextColumn Header="Precio" Binding="{Binding Precio}"/>
+                <DataGridTextColumn Header="Stock" Binding="{Binding Stock}"/>
+
+                <DataGridTemplateColumn Header="Acciones">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Editar" Click="Button_Click" />
+                                <Button Content="Eliminar" Click="Button_Click_1" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
             </DataGrid.Columns>
         </DataGrid>

@@ -1,20 +1,12 @@
-﻿using InventarioInstrumentos.Dao;
-using InventarioInstrumentos.DaoImpl;
+﻿using InventarioInstrumentos.DaoImpl;
 using InventarioInstrumentos.Modelos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Media3D;
 
 namespace InventarioInstrumentos
 {
@@ -23,6 +15,7 @@ namespace InventarioInstrumentos
     /// </summary>
     public partial class MainWindow : Window
     {
+        InstrumentoDAO instrumentoDAO = new InstrumentoDAO();
 
 
         public MainWindow()
@@ -51,7 +44,8 @@ namespace InventarioInstrumentos
                 instrumentoDAO.ObtenerPorId(4)
             };
 
-            instrumentosDataGrid.ItemsSource = instrumentos;
+            //instrumentosDataGrid.ItemsSource = instrumentos;
+            instrumentosDataGrid.ItemsSource = instrumentoDAO.ObtenerTodos();
 
 
             Console.WriteLine(instrumentoDAO.ObtenerNombreCategoria(3));
@@ -72,12 +66,47 @@ namespace InventarioInstrumentos
 
             // Lógica para eliminar la fila seleccionada
             // ...
+
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            // Obtener el botón que disparó el evento
+            Button btnEliminar = sender as Button;
+
+    
+            DataGridRow fila = FindAncestor<DataGridRow>(btnEliminar);
+
+            // Obtener el valor de la celda "id"
+            int id = ((Instrumento)fila.Item).Id;
+
+
+
+            instrumentoDAO.Eliminar(id);
+            instrumentosDataGrid.ItemsSource = instrumentoDAO.ObtenerTodos();
 
         }
+
+        private static T FindAncestor<T>(DependencyObject current)
+        where T : DependencyObject
+        {
+            do
+            {
+                if (current is T parent)
+                {
+                    return parent;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            } while (current != null);
+            return null;
+        }
+
+
+
+
+
+
     }
-    
+
 }

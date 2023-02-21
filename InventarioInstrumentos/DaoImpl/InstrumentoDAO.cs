@@ -84,17 +84,19 @@ namespace InventarioInstrumentos.DaoImpl
             {
                 conexionBD.AbrirConexion();
                 Instrumento instrumento = new Instrumento();
-
-
-                Categoria categoria = new Categoria();
-                SqlCommand comando = new SqlCommand("SELECT *, C.NombreCategoria FROM Instrumento I INNER JOIN Categoria C ON I.IdCategoria = C.Id WHERE I.Id = @IdInstrumento", conexionBD.ObtenerConexion());
+                string consulta = "SELECT I.Id, I.Serial, I.Modelo, I.Stock, I.Precio, I.Estado, I.Gama, I.IdCategoria, I.IdMarca, I.IdTipo, C.Id AS IdCategoria, C.NombreCategoria, M.Id AS IdMarca, M.NombreMarca, T.Id AS IdTipo, T.NombreInstrumento " +
+                    "FROM Instrumento I INNER JOIN Categoria C ON I.IdCategoria = C.Id " +
+                    "INNER JOIN Marca M ON I.IdMarca = M.Id " +
+                    "INNER JOIN TipoInstrumento T ON I.IdTipo = T.Id " + 
+                    "WHERE I.Id = @IdInstrumento";
+                SqlCommand comando = new SqlCommand(consulta, conexionBD.ObtenerConexion());
                 comando.Parameters.AddWithValue("@IdInstrumento", id);
 
                 //
 
                 using (SqlDataReader reader = comando.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
                         instrumento.Id = (int)reader["Id"];
                         instrumento.Serial = (string)reader["Serial"];
@@ -106,11 +108,19 @@ namespace InventarioInstrumentos.DaoImpl
                         //instrumento.FechaIngreso = (DateTime)reader["FechaIngreso"];
                         instrumento.Categoria = new Categoria()
                         {
-                            Id = 123,
+                            Id = (int)reader["IdCategoria"],
                             NombreCategoria = (string)reader["NombreCategoria"]
                         };
-                        //instrumento.Marca.NombreMarca = ObtenerNombreMarca(id);
-                        //instrumento.TipoInstrumento.NombreInstrumento = ObtenerNombreTipo(id);
+                        instrumento.Marca = new Marca()
+                        {
+                            Id = (int)reader["IdMarca"],
+                            NombreMarca = (string)reader["NombreMarca"]
+                        };
+                        instrumento.TipoInstrumento = new TipoInstrumento()
+                        {
+                            Id = (int)reader["IdTipo"],
+                            NombreInstrumento = (string)reader["NombreInstrumento"]
+                        };
                     }
                 }
                 return instrumento;
@@ -132,7 +142,67 @@ namespace InventarioInstrumentos.DaoImpl
 
         public List<Instrumento> ObtenerTodos()
         {
-            throw new NotImplementedException();
+            try
+            {
+                conexionBD.AbrirConexion();
+                List<Instrumento> instrumentos= new List<Instrumento>();
+                string consulta = "SELECT I.Id, I.Serial, I.Modelo, I.Stock, I.Precio, I.Estado, I.Gama, I.IdCategoria, I.IdMarca, I.IdTipo, C.Id AS IdCategoria, C.NombreCategoria, M.Id AS IdMarca, M.NombreMarca, T.Id AS IdTipo, T.NombreInstrumento " +
+                    "FROM Instrumento I INNER JOIN Categoria C ON I.IdCategoria = C.Id " +
+                    "INNER JOIN Marca M ON I.IdMarca = M.Id " +
+                    "INNER JOIN TipoInstrumento T ON I.IdTipo = T.Id ";
+                SqlCommand comando = new SqlCommand(consulta, conexionBD.ObtenerConexion());
+      
+
+                //
+
+                using (SqlDataReader reader = comando.ExecuteReader())
+                {
+                   while (reader.Read())
+                    {
+                        Instrumento instrumento = new Instrumento();
+
+                        instrumento.Id = (int)reader["Id"];
+                        instrumento.Serial = (string)reader["Serial"];
+                        instrumento.Modelo = (string)reader["Modelo"];
+                        instrumento.Stock = (int)reader["Stock"];
+                        instrumento.Precio = (decimal)reader["Precio"];
+                        instrumento.Estado = (Estado)Enum.Parse(typeof(Estado), reader["Estado"].ToString());
+                        instrumento.Gama = (Gama)Enum.Parse(typeof(Gama), reader["Gama"].ToString());
+                        //instrumento.FechaIngreso = (DateTime)reader["FechaIngreso"];
+                        instrumento.Categoria = new Categoria()
+                        {
+                            Id = (int)reader["IdCategoria"],
+                            NombreCategoria = (string)reader["NombreCategoria"]
+                        };
+                        instrumento.Marca = new Marca()
+                        {
+                            Id = (int)reader["IdMarca"],
+                            NombreMarca = (string)reader["NombreMarca"]
+                        };
+                        instrumento.TipoInstrumento = new TipoInstrumento()
+                        {
+                            Id = (int)reader["IdTipo"],
+                            NombreInstrumento = (string)reader["NombreInstrumento"]
+                        };
+
+                        instrumentos.Add(instrumento);
+                    }
+                }
+                return instrumentos;
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new Exception(sqlEx.Message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+            finally
+            {
+                conexionBD.CerrarConexion();
+            }
         }
 
 
