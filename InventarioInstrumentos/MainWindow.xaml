@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:InventarioInstrumentos" 
         xmlns:local1="clr-namespace:InventarioInstrumentos.Helpers"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="900">
+        WindowStartupLocation="CenterScreen"
+        Title="App Inventario" Height="600" Width="1150">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -33,50 +34,158 @@
             </Style>
         </ResourceDictionary>
 
-       
-
-
     </Window.Resources>
 
+    <TabControl >
+        <TabItem Name="tabInstrumentos">
+            <TabItem.Header>
+                <Label >Instrumentos</Label>
+            </TabItem.Header>
 
-    <Grid >
+            <Grid >
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Button Style="{StaticResource ButtonStyle}" Content="Agregar Nuevo" HorizontalAlignment="Center" VerticalAlignment="Center" Width="112" Click="AgregarInstrumentoBtn" Grid.Row="2" />
 
-        <Grid.RowDefinitions >
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="60*"/>
-        </Grid.RowDefinitions>
+                <TextBlock  HorizontalAlignment="Center" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,80,0,0" Width="1125" Background="#FF151515" Foreground="#FFEAEAEA"><Run Text=" "/><Run Language="es-es" Text="  "/><Run Text="Instrumentos"/></TextBlock>
+                <DataGrid Grid.Row="1" Name="instrumentosDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Center" Width="1125" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Id" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Width="*" Header="Nombre" Binding="{Binding TipoInstrumento, Converter={StaticResource TipoInstrumentoConverter}}"/>
+                        <DataGridTextColumn Width="*" Header="Marca" Binding="{Binding Marca, Converter={StaticResource MarcaConverter}}"/>
+                        <DataGridTextColumn Width="*" Header="Modelo" Binding="{Binding Modelo}"/>
+                        <DataGridTextColumn Width="*" Header="Serial" Binding="{Binding Serial}"/>
+                        <DataGridTextColumn Width="*" Header="Fecha" Binding="{Binding FechaIngreso}"/>
 
-        <DataGrid Grid.Row="1" Name="instrumentosDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Center" Width="880" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="Id" Binding="{Binding Id}"/>
-                <DataGridTextColumn Width="*" Header="Nombre" Binding="{Binding TipoInstrumento, Converter={StaticResource TipoInstrumentoConverter}}"/>
-                <DataGridTextColumn Width="*" Header="Marca" Binding="{Binding Marca, Converter={StaticResource MarcaConverter}}"/>
-                <DataGridTextColumn Width="*" Header="Modelo" Binding="{Binding Modelo}"/>
-                <DataGridTextColumn Width="*" Header="Serial" Binding="{Binding Serial}"/>
-                <DataGridTextColumn Width="*" Header="Categoria" Binding="{Binding Categoria, Converter={StaticResource CategoriaConverter}}"/>
-                <DataGridTextColumn Width="*" Header="Estado" Binding="{Binding Estado}"/>
-                <DataGridTextColumn Width="*" Header="Precio" Binding="{Binding Precio}"/>
-                <DataGridTextColumn Width="*" Header="Stock" Binding="{Binding Stock}"/>
+                        <DataGridTextColumn Width="*" Header="Categoria" Binding="{Binding Categoria, Converter={StaticResource CategoriaConverter}}"/>
+                        <DataGridTextColumn Width="*" Header="Estado" Binding="{Binding Estado}"/>
+                        <DataGridTextColumn Width="*" Header="Gama" Binding="{Binding Gama}"/>
+                        <DataGridTextColumn Width="*" Header="Precio" Binding="{Binding Precio}"/>
+                        <DataGridTextColumn Width="*" Header="Stock" Binding="{Binding Stock}"/>
 
-                <DataGridTemplateColumn Header="Acciones">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="Editar" Click="Button_Click" />
-                                <Button Content="Eliminar" Click="Button_Click_1" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Acciones">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Editar" Click="EditarInstrumentoBtn" />
+                                        <Button Content="Eliminar" Click="EliminarInstrumentoBtn" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
 
-            </DataGrid.Columns>
-        </DataGrid>
-        <TextBlock Background="#FF151515" HorizontalAlignment="Center" Height="34" TextWrapping="Wrap" Text="Stock Instrumentos Musicales" VerticalAlignment="Top" Width="880" FontSize="16px" Foreground="#FFD2D2D2"/>
-        <Button Style="{StaticResource ButtonStyle}" Content="Instrumentos" HorizontalAlignment="Left" Margin="325,39,0,0" VerticalAlignment="Top" />
-        <Button Style="{StaticResource ButtonStyle}" Content="Marcas" HorizontalAlignment="Left" Margin="469,39,0,0" VerticalAlignment="Top" />
-        <Button Style="{StaticResource ButtonStyle}" Content="Tipos" HorizontalAlignment="Left" Margin="615,39,0,0" VerticalAlignment="Top" />
-        <Button Style="{StaticResource ButtonStyle}" Content="Categorias" HorizontalAlignment="Left" Margin="760,39,0,0" VerticalAlignment="Top" />
-        <TextBlock  HorizontalAlignment="Center" Height="24" TextWrapping="Wrap" Text="Instrumentos" VerticalAlignment="Top" Margin="0,160,0,0" Width="880" Background="#FF151515" Foreground="#FFEAEAEA"/>
+        <TabItem Name="tabCategorias">
+            <TabItem.Header>
+                <Label >Categorias</Label>
+            </TabItem.Header>
 
-    </Grid>
+            <Grid >
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Button Style="{StaticResource ButtonStyle}" Content="Agregar Nueva" HorizontalAlignment="Center" VerticalAlignment="Center" Width="112" Click="AgregarCategoriaBtn" Grid.Row="2" />
+
+                <TextBlock  HorizontalAlignment="Center" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,80,0,0" Width="1125" Background="#FF151515" Foreground="#FFEAEAEA"><Run Text=" "/><Run Language="es-es" Text="  "/><Run Text="Categorias"/></TextBlock>
+                <DataGrid Grid.Row="1" Name="CategoriasDataGrid"  AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Center" Width="1125" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Id" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Width="*" Header="Categoria" Binding="{Binding NombreCategoria}"/>
+                        
+
+                        <DataGridTemplateColumn Header="Acciones">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Editar" Click="EditarCategoriaBtn"/>
+                                        <Button Content="Eliminar" Click="EliminarCategoriaBtn" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+
+        <TabItem Name="tabMarcas">
+            <TabItem.Header>
+                <Label >Marcas</Label>
+            </TabItem.Header>
+
+            <Grid >
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Button Style="{StaticResource ButtonStyle}" Content="Agregar Nuevo" HorizontalAlignment="Center" VerticalAlignment="Center" Width="112" Click="AgregarMarcaBtn" Grid.Row="2" />
+
+                <TextBlock  HorizontalAlignment="Center" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,80,0,0" Width="1125" Background="#FF151515" Foreground="#FFEAEAEA"><Run Text=" "/><Run Language="es-es" Text="  "/><Run Text="Marcas"/></TextBlock>
+                <DataGrid Grid.Row="1" Name="MarcasDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Center" Width="1125" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Id" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Width="*" Header="Marca" Binding="{Binding NombreMarca}"/>
+                        
+
+                        <DataGridTemplateColumn Header="Acciones">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Editar" Click="EditarMarcaBtn" />
+                                        <Button Content="Eliminar" Click="EliminarMarcaBtn" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+
+        <TabItem Name="tabTipos">
+            <TabItem.Header>
+                <Label >Tipos de instrumento</Label>
+            </TabItem.Header>
+
+            <Grid >
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Button Style="{StaticResource ButtonStyle}" Content="Agregar Nuevo" HorizontalAlignment="Center" VerticalAlignment="Center" Width="112" Click="AgregarTipoBtn" Grid.Row="2" />
+
+                <TextBlock  HorizontalAlignment="Center" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,80,0,0" Width="1125" Background="#FF151515" Foreground="#FFEAEAEA"><Run Text=" "/><Run Language="es-es" Text="  "/><Run Text="Tipos de instrumento"/></TextBlock>
+                <DataGrid Grid.Row="1" Name="TiposDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Center" Width="1125" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Id" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Width="*" Header="Tipo" Binding="{Binding NombreInstrumento}"/>
+                   
+
+                        <DataGridTemplateColumn Header="Acciones">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Editar" Click="EditarTipoBtn" />
+                                        <Button Content="Eliminar" Click="EliminarTipoBtn" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+    </TabControl>
+
+
 </Window>

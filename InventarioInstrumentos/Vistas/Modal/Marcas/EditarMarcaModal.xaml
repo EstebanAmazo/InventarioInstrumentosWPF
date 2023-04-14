@@ -1,0 +1,32 @@
+﻿<Window x:Class="InventarioInstrumentos.Vistas.Modal.Marcas.EditarMarcaModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InventarioInstrumentos.Vistas.Modal.Marcas"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="EditarMarcaModal" Height="240" Width="300">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Grid.Row="0" Margin="10" Height="25" FontSize="15">Editar Marca</TextBlock>
+            <Label Grid.Row="1" Margin="10 10 10 4" Height="25" >Nombre de la marca</Label>
+            <TextBox Grid.Row="2" Name="MarcaTextBox" Height="30" VerticalContentAlignment="Center" Margin="10 0" />
+
+            <Button Grid.Row="23" Grid.ColumnSpan="2" Height="30" Width="130" Margin="40" Click="GuardarMarcaBtn">Guardar</Button>
+
+            <!--<ComboBox DisplayMemberPath=""></ComboBox>-->
+        </Grid>
+    </Grid>
+</Window>

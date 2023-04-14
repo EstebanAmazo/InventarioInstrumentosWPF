@@ -4,9 +4,6 @@ using InventarioInstrumentos.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InventarioInstrumentos.DaoImpl
 {
@@ -16,12 +13,13 @@ namespace InventarioInstrumentos.DaoImpl
         ConexionBD conexionBD = new ConexionBD();
 
 
-        public void Actualizar(Categoria categoria)
+        public void Actualizar(int id, Categoria categoria)
         {
             try
             {
                 conexionBD.AbrirConexion();
-                SqlCommand comando = new SqlCommand("UPDATE Categoria SET NombreCategoria = @NombreCategoria", conexionBD.conexion);
+                SqlCommand comando = new SqlCommand("UPDATE Categoria SET NombreCategoria = @NombreCategoria WHERE Id = @idCategoria", conexionBD.ObtenerConexion());
+                comando.Parameters.AddWithValue("@IdCategoria", id);
                 comando.Parameters.AddWithValue("@NombreCategoria", categoria.NombreCategoria);
                 comando.ExecuteNonQuery();
             }
@@ -44,7 +42,7 @@ namespace InventarioInstrumentos.DaoImpl
             try
             {
                 conexionBD.AbrirConexion();
-                SqlCommand comando = new SqlCommand("DELETE FROM Categoria WHERE Id = @IdCategoria", conexionBD.conexion);
+                SqlCommand comando = new SqlCommand("DELETE FROM Categoria WHERE Id = @IdCategoria", conexionBD.ObtenerConexion());
                 comando.Parameters.AddWithValue("@IdCategoria", id);
                 comando.ExecuteNonQuery();
             }
@@ -68,7 +66,7 @@ namespace InventarioInstrumentos.DaoImpl
             try
             {
                 conexionBD.AbrirConexion();
-                SqlCommand comando = new SqlCommand("INSERT INTO Categoria (NombreCategoria) VALUES (@NombreCategoria)", conexionBD.conexion);
+                SqlCommand comando = new SqlCommand("INSERT INTO Categoria (NombreCategoria) VALUES (@NombreCategoria)", conexionBD.ObtenerConexion());
                 comando.Parameters.AddWithValue("@NombreCategoria", categoria.NombreCategoria);
                 comando.ExecuteNonQuery();
             }
@@ -92,7 +90,7 @@ namespace InventarioInstrumentos.DaoImpl
             {
                 conexionBD.AbrirConexion();
                 Categoria categoria = new Categoria();
-                SqlCommand comando = new SqlCommand("SELECT * FROM Categoria WHERE Id = @IdCategoria", conexionBD.conexion);
+                SqlCommand comando = new SqlCommand("SELECT * FROM Categoria WHERE Id = @IdCategoria", conexionBD.ObtenerConexion());
                 comando.Parameters.AddWithValue("@IdCategoria", id);
 
                 using (SqlDataReader reader = comando.ExecuteReader())
@@ -128,18 +126,18 @@ namespace InventarioInstrumentos.DaoImpl
             {
                 conexionBD.AbrirConexion();
                 List<Categoria> categorias = new List<Categoria>();
-                SqlCommand comando = new SqlCommand("SELECT * FROM Categoria", conexionBD.conexion);
+                SqlCommand comando = new SqlCommand("SELECT * FROM Categoria", conexionBD.ObtenerConexion());
 
 
                 using (SqlDataReader reader = comando.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        Categoria categoria = new Categoria()
-                        {
-                            Id = (int)reader["Id"],
-                            NombreCategoria = (string)reader["NombreCategoria"]
-                        };
+                        Categoria categoria = new Categoria();
+                        categoria.Id = (int)reader["Id"];
+                        categoria.NombreCategoria = (string)reader["NombreCategoria"];
+
+
                         categorias.Add(categoria);
 
                     }

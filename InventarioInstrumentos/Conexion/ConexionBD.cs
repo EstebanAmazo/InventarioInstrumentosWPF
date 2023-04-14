@@ -14,7 +14,7 @@ namespace InventarioInstrumentos.Conexion
 
         public ConexionBD()
         {
-            string cadenaConexion = "Data Source=WINVM;Initial Catalog=InventarioInstrumentos;User ID=sa;Password=root;";
+            string cadenaConexion = "Data Source=WDC;Initial Catalog=InventarioInstrumentos;User ID=sa;Password=root;";
             conexion = new SqlConnection(cadenaConexion);
         }
 

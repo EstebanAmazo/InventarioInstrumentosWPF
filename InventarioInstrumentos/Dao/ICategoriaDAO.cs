@@ -13,7 +13,7 @@ namespace InventarioInstrumentos.Dao
         List<Categoria> ObtenerTodos();
         Categoria ObtenerPorId(int id);
         void Insertar(Categoria categoria);
-        void Actualizar(Categoria categoria);
+        void Actualizar(int id, Categoria categoria);
         void Eliminar(int Id);
     }
 }

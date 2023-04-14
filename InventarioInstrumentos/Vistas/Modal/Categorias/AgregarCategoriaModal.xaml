@@ -1,0 +1,31 @@
+﻿<Window x:Class="InventarioInstrumentos.Vistas.Modal.Categorias.AgregarCategoriaModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InventarioInstrumentos.Vistas.Modal.Categorias"
+        WindowStartupLocation="CenterScreen"
+        Title="AgregarCategoriaModal" Height="240" Width="300">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Grid.Row="0" Margin="10" Height="25" FontSize="15">Agregar Categoria</TextBlock>
+            <Label Grid.Row="1" Margin="10 10 10 4" Height="25" >Nombre de la categoria</Label>
+            <TextBox Grid.Row="2" Name="CategoriaTextBox" Height="30" VerticalContentAlignment="Center" Margin="10 0" />
+
+            <Button Grid.Row="23" Grid.ColumnSpan="2" Height="30" Width="130" Margin="40" Click="GuardarCategoriaBtn">Guardar</Button>
+
+            <!--<ComboBox DisplayMemberPath=""></ComboBox>-->
+        </Grid>
+    </Grid>
+</Window>

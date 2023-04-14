@@ -13,7 +13,7 @@ namespace InventarioInstrumentos.Dao
         List<Marca> ObtenerTodos();
         Marca ObtenerPorId(int id);
         void Insertar(Marca marca);
-        void Actualizar(Marca marca);
+        void Actualizar(int id, Marca marca);
         void Eliminar(int Id);
     }
 }

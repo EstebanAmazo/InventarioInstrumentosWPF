@@ -12,7 +12,7 @@ namespace InventarioInstrumentos.Dao
         List<Instrumento> ObtenerTodos();
         Instrumento ObtenerPorId(int id);
         void Insertar(Instrumento instrumento);
-        void Actualizar(Instrumento instrumento);
-        void Eliminar(int Id);
+        void Actualizar(int id, Instrumento instrumento);
+        bool Eliminar(int Id);
     }
 }

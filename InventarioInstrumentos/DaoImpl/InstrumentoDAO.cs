@@ -15,12 +15,41 @@ namespace InventarioInstrumentos.DaoImpl
 
         ConexionBD conexionBD = new ConexionBD();
 
-        public void Actualizar(Instrumento instrumento)
+        public void Actualizar(int id, Instrumento instrumento)
         {
+            try
+            {
+                conexionBD.AbrirConexion();
+                SqlCommand comando = new SqlCommand("UPDATE Instrumento SET Serial = @Serial, Modelo = @Modelo, Stock = @Stock, Precio = @Precio, Estado = @Estado, Gama = @Gama, FechaIngreso = @FechaIngreso, IdCategoria = @IdCategoria, IdMarca = @IdMarca, IdTipo = @IdTipo WHERE Id = @IdInstrumento;", conexionBD.ObtenerConexion());
+                comando.Parameters.AddWithValue("@IdInstrumento", id);
+                comando.Parameters.AddWithValue("@Serial", instrumento.Serial);
+                comando.Parameters.AddWithValue("@Modelo", instrumento.Modelo);
+                comando.Parameters.AddWithValue("@Stock", instrumento.Stock);
+                comando.Parameters.AddWithValue("@Precio", instrumento.Precio);
+                comando.Parameters.AddWithValue("@Estado", instrumento.Estado);
+                comando.Parameters.AddWithValue("@Gama", instrumento.Gama);
+                comando.Parameters.AddWithValue("@FechaIngreso", instrumento.FechaIngreso);
+                comando.Parameters.AddWithValue("@IdCategoria", instrumento.Categoria.Id);
+                comando.Parameters.AddWithValue("@IdMarca", instrumento.Marca.Id);
+                comando.Parameters.AddWithValue("IdTipo", instrumento.TipoInstrumento.Id);
+                comando.ExecuteNonQuery();
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new Exception(sqlEx.Message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conexionBD.CerrarConexion();
+            }
 
         }
 
-        public void Eliminar(int id)
+        public bool Eliminar(int id)
         {
             try
             {
@@ -28,6 +57,7 @@ namespace InventarioInstrumentos.DaoImpl
                 SqlCommand comando = new SqlCommand("DELETE FROM Instrumento WHERE Id = @IdInstrumento", conexionBD.ObtenerConexion());
                 comando.Parameters.AddWithValue("@IdInstrumento", id);
                 comando.ExecuteNonQuery();
+                return true;
             }
             catch (SqlException sqlEx)
             {
@@ -79,7 +109,6 @@ namespace InventarioInstrumentos.DaoImpl
 
         public Instrumento ObtenerPorId(int id)
         {
-            
             try
             {
                 conexionBD.AbrirConexion();
@@ -92,8 +121,6 @@ namespace InventarioInstrumentos.DaoImpl
                 SqlCommand comando = new SqlCommand(consulta, conexionBD.ObtenerConexion());
                 comando.Parameters.AddWithValue("@IdInstrumento", id);
 
-                //
-
                 using (SqlDataReader reader = comando.ExecuteReader())
                 {
                     while (reader.Read())
@@ -105,7 +132,7 @@ namespace InventarioInstrumentos.DaoImpl
                         instrumento.Precio = (decimal)reader["Precio"];
                         instrumento.Estado = (Estado)Enum.Parse(typeof(Estado), reader["Estado"].ToString());
                         instrumento.Gama = (Gama)Enum.Parse(typeof(Gama), reader["Gama"].ToString());
-                        //instrumento.FechaIngreso = (DateTime)reader["FechaIngreso"];
+                  //      instrumento.FechaIngreso = (DateTime)reader["FechaIngreso"];
                         instrumento.Categoria = new Categoria()
                         {
                             Id = (int)reader["IdCategoria"],
@@ -146,7 +173,7 @@ namespace InventarioInstrumentos.DaoImpl
             {
                 conexionBD.AbrirConexion();
                 List<Instrumento> instrumentos= new List<Instrumento>();
-                string consulta = "SELECT I.Id, I.Serial, I.Modelo, I.Stock, I.Precio, I.Estado, I.Gama, I.IdCategoria, I.IdMarca, I.IdTipo, C.Id AS IdCategoria, C.NombreCategoria, M.Id AS IdMarca, M.NombreMarca, T.Id AS IdTipo, T.NombreInstrumento " +
+                string consulta = "SELECT I.Id, I.Serial, I.Modelo, I.Stock, I.Precio, I.Estado, I.Gama, I.IdCategoria, I.FechaIngreso, I.IdMarca, I.IdTipo, C.Id AS IdCategoria, C.NombreCategoria, M.Id AS IdMarca, M.NombreMarca, T.Id AS IdTipo, T.NombreInstrumento " +
                     "FROM Instrumento I INNER JOIN Categoria C ON I.IdCategoria = C.Id " +
                     "INNER JOIN Marca M ON I.IdMarca = M.Id " +
                     "INNER JOIN TipoInstrumento T ON I.IdTipo = T.Id ";
@@ -168,7 +195,7 @@ namespace InventarioInstrumentos.DaoImpl
                         instrumento.Precio = (decimal)reader["Precio"];
                         instrumento.Estado = (Estado)Enum.Parse(typeof(Estado), reader["Estado"].ToString());
                         instrumento.Gama = (Gama)Enum.Parse(typeof(Gama), reader["Gama"].ToString());
-                        //instrumento.FechaIngreso = (DateTime)reader["FechaIngreso"];
+                        instrumento.FechaIngreso = (DateTime)reader["FechaIngreso"];
                         instrumento.Categoria = new Categoria()
                         {
                             Id = (int)reader["IdCategoria"],
@@ -315,5 +342,6 @@ namespace InventarioInstrumentos.DaoImpl
             }
 
         }
+
     }
 }
